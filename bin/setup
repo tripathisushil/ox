@@ -1,0 +1,14 @@
+#!/bin/bash
+read -p "Run clean up? [y/n]: " opt
+if [ "$opt" = "y" ]; then `./cleanup.sh 05f3 2>&1 | tee cleanup.log`; cat cleanup.log; fi
+read -p "Setup projects? [y/n]: " opt
+if [ "$opt" = "y" ]; then `./setup_projects.sh 05f3 ox-prolifics true 2>&1 | tee setProject.log`; cat setProject.log; fi
+read -p "Setup jenkins? [y/n]: " opt
+# Example: $0 wkha https://github.com/redhat-gpte-devopsautomation/advdev_homework_template.git na311.openshift.opentlc.com"
+if [ "$opt" = "y" ]; then `./setup_jenkins.sh 05f3 https://github.com/ox-prolifics/rhocp-appDeploy-homework.git https://master.na311.openshift.opentlc.com 2>&1 |  tee setJenkins.log`; cat setJenkins.log; fi
+read -p "Setup dev? [y/n]: " opt
+if [ "$opt" = "y" ]; then `./setup_dev.sh 05f3 2>&1 | tee setDev.log`; cat setDev.log; fi
+read -p "Setup prod? [y/n]: " opt
+if [ "$opt" = "y" ]; then `./setup_prod.sh 05f3 2>&1 | tee setProd.log`; cat setProd.log; fi
+read -p "Reset Prod? [y/n]: " opt
+if [ "$opt" = "y" ]; then `./reset_prod.sh 05f3 2>&1 | tee resetProd.log`; cat resetProd.log; fi
