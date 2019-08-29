@@ -41,34 +41,34 @@ podTemplate(
       }
 //* Fix parallel
 //*      // *** The next two stages should run in parallel ***
-//*      stage('Unit Tests and Code Analysis') {
-//*         parallel {
-//*            // Using Maven run the unit tests
-//*            stage('Unit Tests') {
+      stage('Unit Tests and Code Analysis') {
+         parallel {
+            // Using Maven run the unit tests
+            stage('Unit Tests') {
 //*               steps {
-//*                  echo "Running Unit Tests"
-//*                  sh "${mvnCmd} test"
+                  echo "Running Unit Tests"
+                  sh "${mvnCmd} test"
 //*               }
-//*            }
-//*            // Using Maven call SonarQube for Code Analysis
-//*            stage('Code Analysis') {
+            }
+            // Using Maven call SonarQube for Code Analysis
+            stage('Code Analysis') {
 //*               steps {
-//*                  echo "Running Code Analysis"
-//*                  sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-gpte-hw-cicd.apps.na311.openshift.opentlc.com"
+                  echo "Running Code Analysis"
+                  sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-gpte-hw-cicd.apps.na311.openshift.opentlc.com"
 //*              }
-//*            }
-//*         }
-//*      } 
+            }
+         }
+      } 
 
-      stage('Unit Tests') {
-         echo "Running Unit Tests"
-         sh "${mvnCmd} test"
-      }
-      // Using Maven call SonarQube for Code Analysis
-      stage('Code Analysis') {
-         echo "Running Code Analysis"
-         sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-gpte-hw-cicd.apps.na311.openshift.opentlc.com"
-      }
+//*      stage('Unit Tests') {
+//*         echo "Running Unit Tests"
+//*         sh "${mvnCmd} test"
+//*      }
+//*      // Using Maven call SonarQube for Code Analysis
+//*      stage('Code Analysis') {
+//*         echo "Running Code Analysis"
+//*         sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-gpte-hw-cicd.apps.na311.openshift.opentlc.com"
+//*      }
 
       // Publish the built war file to Nexus
       stage('Publish to Nexus') {
