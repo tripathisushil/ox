@@ -21,7 +21,7 @@ pipeline {
     def mvnCmd = "mvn -s ../nexus_settings.xml"
     // Checkout Source Code.
     stage('Checkout Source') {
-      checkout scm
+      checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ox-prolifics/rhocp-appDeploy-homework.git']]])
     }
 
     // Build the Tasks Service
