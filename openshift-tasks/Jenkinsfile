@@ -18,7 +18,7 @@ podTemplate(
 {
   node('skopeo-pod') {
     // Define Maven Command to point to the correct settings for our Nexus installation
-    def mvnCmd = "mvn -s ../nexus_settings.xml"
+    def mvnCmd = "mvn -e -s ../nexus_settings.xml"
     // Checkout Source Code.
     stage('Checkout Source: 1/10') {
       checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ox-prolifics/rhocp-appDeploy-homework.git']]])
