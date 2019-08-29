@@ -15,7 +15,7 @@ podTemplate(
   ]
 ) 
 
-pipeline {
+{
   node('skopeo-pod') {
     // Define Maven Command to point to the correct settings for our Nexus installation
     def mvnCmd = "mvn -s ../nexus_settings.xml"
