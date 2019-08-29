@@ -39,16 +39,18 @@ podTemplate(
       stage('Unit Tests and Code Analysis') {
          paralell {
             // Using Maven run the unit tests
-//*            stage('Unit Tests') {
-            'Unit Tests': {
-               echo "Running Unit Tests"
-               sh "${mvnCmd} test"
+            stage('Unit Tests') {
+               steps {
+                  echo "Running Unit Tests"
+                  sh "${mvnCmd} test"
+               }
             }
             // Using Maven call SonarQube for Code Analysis
-//*            stage('Code Analysis') {
-            'Code Analiysis': {
-               echo "Running Code Analysis"
-               sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-gpte-hw-cicd.apps.na311.openshift.opentlc.com"
+            stage('Code Analysis') {
+               steps {
+                  echo "Running Code Analysis"
+                  sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-gpte-hw-cicd.apps.na311.openshift.opentlc.com"
+              }
             }
          }
       } 
