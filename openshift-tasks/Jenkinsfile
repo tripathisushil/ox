@@ -41,24 +41,56 @@ podTemplate(
       }
 //* Fix parallel
 //*      // *** The next two stages should run in parallel ***
+
+//* stage("Parallel") {
+//*     steps {
+//*         parallel (
+//*             "firstTask" : {
+//*                   echo "Running Unit Tests"
+//*                   sh "${mvnCmd} test"
+//*                 //do some stuff
+//*             },
+//*             "secondTask" : {
+//*                 // Do some other stuff in parallel
+//*                   echo "Running Code Analysis"
+//*                   sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-gpte-hw-cicd.apps.na311.openshift.opentlc.com"
+//*             }
+//*         )
+//*     }
+//* }
+
       stage('Unit Tests and Code Analysis') {
-         parallel {
-            // Using Maven run the unit tests
-            stage('Unit Tests') {
-//*               steps {
+         parallel(firstTask: {
+            stage 'Unit Tests'
+            // Do some stuff
                   echo "Running Unit Tests"
                   sh "${mvnCmd} test"
-//*               }
-            }
-            // Using Maven call SonarQube for Code Analysis
-            stage('Code Analysis') {
-//*               steps {
+            }, secondTask: {
+               stage 'Code Analysis'
+               // Do some other stuff in parallel
                   echo "Running Code Analysis"
                   sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-gpte-hw-cicd.apps.na311.openshift.opentlc.com"
+            })
+      }
+
+//*      stage('Unit Tests and Code Analysis') {
+//*         parallel {
+//*            // Using Maven run the unit tests
+//*            stage('Unit Tests') {
+//*               steps {
+//*                  echo "Running Unit Tests"
+//*                  sh "${mvnCmd} test"
+//*               }
+//*            }
+//*            // Using Maven call SonarQube for Code Analysis
+//*            stage('Code Analysis') {
+//*               steps {
+//*                  echo "Running Code Analysis"
+//*                  sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-gpte-hw-cicd.apps.na311.openshift.opentlc.com"
 //*              }
-            }
-         }
-      } 
+//*            }
+//*         }
+//*      } 
 
 //*      stage('Unit Tests') {
 //*         echo "Running Unit Tests"
