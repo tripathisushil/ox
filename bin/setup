@@ -2,7 +2,7 @@
 read -p "Run clean up? [y/n]: " opt
 if [ "$opt" = "y" ]; then `./cleanup.sh 05f3 2>&1 | tee cleanup.log`; cat cleanup.log; fi
 read -p "Setup projects? [y/n]: " opt
-if [ "$opt" = "y" ]; then `./setup_projects.sh 05f3 ox-prolifics true 2>&1 | tee setProject.log`; cat setProject.log; fi
+if [ "$opt" = "y" ]; then `./setup_projects.sh 05f3 ox-prolifics false 2>&1 | tee setProject.log`; cat setProject.log; fi
 read -p "Setup jenkins? [y/n]: " opt
 # Example: $0 wkha https://github.com/redhat-gpte-devopsautomation/advdev_homework_template.git na311.openshift.opentlc.com"
 if [ "$opt" = "y" ]; then `./setup_jenkins.sh 05f3 https://github.com/ox-prolifics/rhocp-appDeploy-homework.git https://master.na311.openshift.opentlc.com 2>&1 |  tee setJenkins.log`; cat setJenkins.log; fi
