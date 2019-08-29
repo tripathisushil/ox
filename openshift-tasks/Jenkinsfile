@@ -37,7 +37,7 @@ podTemplate(
 //* Fix parallel
       // *** The next two stages should run in parallel ***
       stage('Unit Tests and Code Analysis') {
-         paralell {
+         parallel {
             // Using Maven run the unit tests
             stage('Unit Tests') {
                steps {
