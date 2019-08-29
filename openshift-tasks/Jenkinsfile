@@ -137,7 +137,7 @@ podTemplate(
 
       stage('Blue/Green Production Deployment') {
          // Determine which application is active
-         steps {
+//*         steps {
             echo "Blue/Green Deployment"
             script {
                openshift.withCluster() {
@@ -169,11 +169,11 @@ podTemplate(
                   }
                }
             }
-         }
+//*         }
       }
 
       stage('Switch over to new Version') {
-         steps {
+//*         steps {
             input "Switch Production?"
             echo "Switching Production application to ${destApp}."
             script {
@@ -185,7 +185,7 @@ podTemplate(
                   }
                }
             }
-         }    
+//*         }    
       }
     }
   }
