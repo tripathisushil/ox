@@ -20,7 +20,7 @@ podTemplate(
     // Define Maven Command to point to the correct settings for our Nexus installation
     def mvnCmd = "mvn -s ../nexus_settings.xml"
     // Checkout Source Code.
-    stage('Checkout Source') {
+    stage('Checkout Source: 1/10') {
       checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ox-prolifics/rhocp-appDeploy-homework.git']]])
     }
 
@@ -30,7 +30,7 @@ podTemplate(
       def devTag  = ""
       def prodTag = ""
 
-      stage('Build war') {
+      stage('Build war: 2/10') {
         echo "Building version ${devTag}"
         sh "${mvnCmd} clean package -DskipTests=true"
       }
@@ -55,24 +55,24 @@ podTemplate(
 //*         }
 //*      } 
 
-      stage('Unit Tests') {
+      stage('Unit Tests: 3/10') {
          echo "Running Unit Tests"
          sh "${mvnCmd} test"
       }
       // Using Maven call SonarQube for Code Analysis
-      stage('Code Analysis') {
+      stage('Code Analysis: 4/10') {
          echo "Running Code Analysis"
          sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-gpte-hw-cicd.apps.na311.openshift.opentlc.com"
       }
 
       // Publish the built war file to Nexus
-      stage('Publish to Nexus') {
+      stage('Publish to Nexus: 5/10') {
         echo "Publish to Nexus"
         sh "${mvnCmd} deploy -DskipTests=true -DaltDeploymentRepository=nexus::default::https://nexus3-registry-gpte-hw-cicd.apps.na311.openshift.opentlc.com" 
       }
 
       // Build the OpenShift Image in OpenShift and tag it.
-      stage('Build and Tag OpenShift Image') {
+      stage('Build and Tag OpenShift Image: 6/10') {
         echo "Building OpenShift container image tasks:${devTag}"
         script {
             openshift.withCluster() {
@@ -85,7 +85,7 @@ podTemplate(
       }
 
       // Deploy the built image to the Development Environment.
-      stage('Deploy to Dev') {
+      stage('Deploy to Dev: 7/10') {
         echo "Deploying container image to Development Project"
         script {
            // Update the Image on the Development Deployment Config
@@ -112,7 +112,7 @@ podTemplate(
       }
 
       // Copy Image to Nexus container registry
-      stage('Copy Image to Nexus container registry') {
+      stage('Copy Image to Nexus container registry: 8/10') {
         echo "Copy image to Nexus container registry"
         script {
            sh "skopeo copy --src-tls-verify=false --dest-tls-verify=false --src-creds openshift:\$(oc whoami -t) --dest-creds admin:redhat docker://docker-registry.default.svc.cluster.local:5000/${devProject}/tasks:${devTag} docker://nexus3-registry.gpte-hw-cicd.svc.cluster.local:5000/tasks:${devTag}"
@@ -130,7 +130,7 @@ podTemplate(
       def destApp   = "tasks-green"
       def activeApp = ""
 
-      stage('Blue/Green Production Deployment') {
+      stage('Blue/Green Production Deployment: 9/10') {
          // Determine which application is active
          steps {
             echo "Blue/Green Deployment"
@@ -167,7 +167,7 @@ podTemplate(
          }
       }
 
-      stage('Switch over to new Version') {
+      stage('Switch over to new Version: 10/10') {
          steps {
             input "Switch Production?"
             echo "Switching Production application to ${destApp}."
