@@ -20,6 +20,17 @@ podTemplate(
     // Define Maven Command to point to the correct settings for our Nexus installation
     def mvnCmd = "mvn -s ../nexus_settings.xml"
     // Checkout Source Code.
+    parallel2: {
+        stage ('Unit Test') 
+        {
+            echo "Running Unit Tests"
+        }
+    }, "Code Analysis": {
+        stage ('Code Analysis') 
+        {
+            echo "Running Code Analysis"
+        }
+    }
     stage('Checkout Source') {
       checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ox-prolifics/rhocp-appDeploy-homework.git']]])
     }
@@ -42,7 +53,7 @@ podTemplate(
 //* Fix parallel
 //*      // *** The next two stages should run in parallel ***
 
-     parallel "Unit Tests and Code Analysis": {
+     parallel "Unit Tests": {
          stage ('Unit Test') 
          {
              echo "Running Unit Tests"
