@@ -13,7 +13,6 @@ echo "Setting up Tasks Development Environment in project ${GUID}-tasks-dev"
 oc policy add-role-to-user edit system:serviceaccount:${GUID}-jenkins:jenkins -n ${GUID}-tasks-dev
 
 # Set up Dev Application
-# oc new-build --binary=true --name="tasks" jboss-eap71-openshift:1.3 -n ${GUID}-tasks-dev
 oc new-build --binary=true --name="tasks" --image-stream=openshift/jboss-eap71-openshift:1.1 -n ${GUID}-tasks-dev
 oc new-app ${GUID}-tasks-dev/tasks:0.0-0 --name=tasks --allow-missing-imagestream-tags=true -n ${GUID}-tasks-dev
 oc set triggers dc/tasks --remove-all -n ${GUID}-tasks-dev
