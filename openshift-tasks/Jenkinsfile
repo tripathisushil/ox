@@ -27,12 +27,14 @@ podTemplate(
     // Build the Tasks Service
     dir('openshift-tasks') {
       def version = getVersionFromPom("pom.xml")
-      def devProject  = "05f3-tasks-dev"
-      def prodProject = "05f3-tasks-prod"
+      def devProject  = "${GUID}-tasks-dev"
+      def prodProject = "${GUID}-tasks-prod"
       // Set the tag for the development image: version + build number
       def devTag      = "0.0-0"
+      sh "oc set env dc\tasks VERSION='${devTag} (tasks-dev)' -n ${devProject}
       // Set the tag for the production image: version
       def prodTag     = "0.0"
+      sh "oc set env dc\tasks VERSION='${prodTag} (tasks-prod)' -n ${prodProject}
 
       stage('Build war') {
         echo "Building version ${devTag}"
