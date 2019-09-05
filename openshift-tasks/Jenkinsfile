@@ -154,7 +154,7 @@ podTemplate(
       }
 
       stage('Switch over to new Version') {
-            input "Switch Production?"
+//*            input "Switch Production?"
             echo "Switching Production application to ${destApp}."
             script {
                openshift.withCluster() {
