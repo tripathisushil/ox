@@ -31,10 +31,8 @@ podTemplate(
       def prodProject = "${GUID}-tasks-prod"
       // Set the tag for the development image: version + build number
       def devTag      = "0.0-0"
-      sh "oc set env dc\tasks VERSION='${devTag} (tasks-dev)' -n ${devProject}"
       // Set the tag for the production image: version
       def prodTag     = "0.0"
-      sh "oc set env dc\tasks VERSION='${prodTag} (tasks-prod)' -n ${prodProject}"
 
       stage('Build war') {
         echo "Building version ${devTag}"
@@ -77,6 +75,7 @@ podTemplate(
       // Deploy the built image to the Development Environment.
       stage('Deploy to Dev') {
         echo "Deploying container image to Development Project"
+        sh "oc set env dc\tasks VERSION='${devTag} (tasks-dev)' -n ${devProject}"
         script {
            // Update the Image on the Development Deployment Config
            openshift.withCluster() {
@@ -123,6 +122,7 @@ podTemplate(
       stage('Blue/Green Production Deployment') {
          // Determine which application is active
             echo "Blue/Green Deployment"
+            sh "oc set env dc\tasks VERSION='${prodTag} (tasks-prod)' -n ${prodProject}"
             script {
                openshift.withCluster() {
                   openshift.withProject("${prodProject}") {
