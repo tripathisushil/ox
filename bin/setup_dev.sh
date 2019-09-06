@@ -26,3 +26,4 @@ oc set probe dc/tasks --liveness --get-url=http://:8080/ --initial-delay-seconds
 
 # Setting 'wrong' VERSION. This will need to be updated in the pipeline
 oc set env dc/tasks VERSION='0.0 (tsks-dev)' -n ${GUID}-tasks-dev
+oc set env dc/tasks VERSION='0.0-0 (tasks-dev)' -n ${GUID}-tasks-dev

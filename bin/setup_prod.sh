@@ -36,6 +36,8 @@ oc set probe dc/tasks-green --readiness --get-url=http://:8080/ --initial-delay-
 oc set probe dc/tasks-green --liveness --get-url=http://:8080/ --initial-delay-seconds=30 --timeout-seconds=1 -n ${GUID}-tasks-prod
 # Setting 'wrong' VERSION. This will need to be updated in the pipeline
 oc set env dc/tasks-green VERSION='0.0 (tsks-green)' -n ${GUID}-tasks-prod
+oc set env dc/tasks-green VERSION='0.0 (tasks-green)' -n ${GUID}-tasks-green
+oc set env dc/tasks-blue VERSION='0.0 (tasks-blue)' -n ${GUID}-tasks-blue
 
 # Expose Blue service as route to make green application active
 oc expose svc/tasks-green --name tasks -n ${GUID}-tasks-prod

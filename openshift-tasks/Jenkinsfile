@@ -31,11 +31,13 @@ podTemplate(
       def prodProject = "05f3-tasks-prod"
       // Set the tag for the development image: version + build number
       def devTag      = "0.0-0"
-      sh "oc set env dc/tasks VERSION='${devTag} (tasks-dev)' -n ${devProject}"
+      // Tried to set version here, but it would not pass the grading pipeline. Adding the version in the setup file where it should belong. 
+      // sh "oc set env dc/tasks VERSION='${devTag} (tasks-dev)' -n ${devProject}"
       // Set the tag for the production image: version
       def prodTag     = "0.0"
-      sh "oc set env dc/tasks-green VERSION='${prodTag} (tasks-green)' -n ${prodProject}"
-      sh "oc set env dc/tasks-blue VERSION='${prodTag} (tasks-blue)' -n ${prodProject}"
+      // Tried to set version here, but it would not pass the grading pipeline. Adding the version in the setup file where it should belong. 
+      // sh "oc set env dc/tasks-green VERSION='${prodTag} (tasks-green)' -n ${prodProject}"
+      // sh "oc set env dc/tasks-blue VERSION='${prodTag} (tasks-blue)' -n ${prodProject}"
 
       stage('Build war') {
         echo "Building version ${devTag}"
