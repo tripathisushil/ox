@@ -11,11 +11,6 @@ echo "Setting up Tasks Production Environment in project ${GUID}-tasks-prod"
 
 # Set up Production Project
 oc policy add-role-to-group system:image-puller system:serviceaccounts:${GUID}-tasks-prod -n ${GUID}-tasks-dev
-oc policy add-role-to-user edit system:serviceaccount:${GUID}-jenkins:jenkins -n ${GUID}-tasks-prod
-oc patch -n ${GUID}-tasks-prod dc/tasks-blue --patch='{"spec":{"template":{"spec":{"containers":[{"name":"tasks-blue","resources":{"limits":{"cpu":"1","memory":"1356Mi"},"requests":{"cpu":"1","memory":"1356Mi"}}}]}}}}'
-oc patch -n ${GUID}-tasks-prod dc/tasks-green --patch='{"spec":{"template":{"spec":{"containers":[{"name":"tasks-green","resources":{"limits":{"cpu":"1","memory":"1356Mi"},"requests":{"cpu":"1","memory":"1356Mi"}}}]}}}}'
-oc set env dc/tasks-blue VERSION='0.0 (tasks-blue)' -n ${GUID}-tasks-prod
-oc set env dc/tasks-green VERSION='0.0 (tasks-green)' -n ${GUID}-tasks-prod
 
 # Create Blue Application
 oc new-app ${GUID}-tasks-dev/tasks:0.0 --name=tasks-blue --allow-missing-imagestream-tags=true -n ${GUID}-tasks-prod
@@ -44,3 +39,8 @@ oc set env dc/tasks-green VERSION='0.0 (tsks-green)' -n ${GUID}-tasks-prod
 
 # Expose Blue service as route to make green application active
 oc expose svc/tasks-green --name tasks -n ${GUID}-tasks-prod
+oc policy add-role-to-user edit system:serviceaccount:${GUID}-jenkins:jenkins -n ${GUID}-tasks-prod
+oc patch -n ${GUID}-tasks-prod dc/tasks-blue --patch='{"spec":{"template":{"spec":{"containers":[{"name":"tasks-blue","resources":{"limits":{"cpu":"1","memory":"1356Mi"},"requests":{"cpu":"1","memory":"1356Mi"}}}]}}}}'
+oc patch -n ${GUID}-tasks-prod dc/tasks-green --patch='{"spec":{"template":{"spec":{"containers":[{"name":"tasks-green","resources":{"limits":{"cpu":"1","memory":"1356Mi"},"requests":{"cpu":"1","memory":"1356Mi"}}}]}}}}'
+oc set env dc/tasks-blue VERSION='0.0 (tasks-blue)' -n ${GUID}-tasks-prod
+oc set env dc/tasks-green VERSION='0.0 (tasks-green)' -n ${GUID}-tasks-prod

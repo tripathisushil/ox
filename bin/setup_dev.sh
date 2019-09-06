@@ -11,8 +11,6 @@ echo "Setting up Tasks Development Environment in project ${GUID}-tasks-dev"
 
 # Set up Dev Project
 oc policy add-role-to-user edit system:serviceaccount:${GUID}-jenkins:jenkins -n ${GUID}-tasks-dev
-oc set env dc/tasks VERSION='0.0 (tasks-dev)' -n ${GUID}-tasks-dev
-oc patch -n ${GUID}-tasks-dev dc tasks --patch='{"spec":{"template":{"spec":{"containers":[{"name":"tasks","resources":{"limits":{"cpu":"1","memory":"1356Mi"},"requests":{"cpu":"1","memory":"1356Mi"}}}]}}}}'
 
 # Set up Dev Application
 oc new-build --binary=true --name="tasks" --image-stream=openshift/jboss-eap71-openshift:1.1 -n ${GUID}-tasks-dev
@@ -28,3 +26,5 @@ oc set probe dc/tasks --liveness --get-url=http://:8080/ --initial-delay-seconds
 
 # Setting 'wrong' VERSION. This will need to be updated in the pipeline
 oc set env dc/tasks VERSION='0.0 (tsks-dev)' -n ${GUID}-tasks-dev
+oc set env dc/tasks VERSION='0.0 (tasks-dev)' -n ${GUID}-tasks-dev
+oc patch -n ${GUID}-tasks-dev dc tasks --patch='{"spec":{"template":{"spec":{"containers":[{"name":"tasks","resources":{"limits":{"cpu":"1","memory":"1356Mi"},"requests":{"cpu":"1","memory":"1356Mi"}}}]}}}}'
