@@ -31,13 +31,14 @@ podTemplate(
       def prodProject = "05f3-tasks-prod"
       // Set the tag for the development image: version + build number
       def devTag      = "0.0-0"
-      // Tried to set version here, but it would not pass the grading pipeline. Adding the version in the setup file where it should belong. 
-      // sh "oc set env dc/tasks VERSION='${devTag} (tasks-dev)' -n ${devProject}"
+      sh "oc set env dc/tasks VERSION='${devTag} (tasks-dev)' -n ${devProject}"
+      sh "oc patch -n ${GUID}-tasks-dev dc tasks --patch='{"spec":{"template":{"spec":{"containers":[{"name":"tasks","resources":{"limits":{"cpu":"1","memory":"1356Mi"},"requests":{"cpu":"1","memory":"1356Mi"}}}]}}}}'"
       // Set the tag for the production image: version
       def prodTag     = "0.0"
-      // Tried to set version here, but it would not pass the grading pipeline. Adding the version in the setup file where it should belong. 
-      // sh "oc set env dc/tasks-green VERSION='${prodTag} (tasks-green)' -n ${prodProject}"
-      // sh "oc set env dc/tasks-blue VERSION='${prodTag} (tasks-blue)' -n ${prodProject}"
+      sh "oc set env dc/tasks-green VERSION='${prodTag} (tasks-green)' -n ${prodProject}"
+      sh "oc patch -n ${GUID}-tasks-prod dc/tasks-blue --patch='{"spec":{"template":{"spec":{"containers":[{"name":"tasks-blue","resources":{"limits":{"cpu":"1","memory":"1356Mi"},"requests":{"cpu":"1","memory":"1356Mi"}}}]}}}}'"
+      sh "oc set env dc/tasks-blue VERSION='${prodTag} (tasks-blue)' -n ${prodProject}"
+      sh "oc patch -n ${GUID}-tasks-prod dc/tasks-green --patch='{"spec":{"template":{"spec":{"containers":[{"name":"tasks-green","resources":{"limits":{"cpu":"1","memory":"1356Mi"},"requests":{"cpu":"1","memory":"1356Mi"}}}]}}}}'"
 
       stage('Build war') {
         echo "Building version ${devTag}"
