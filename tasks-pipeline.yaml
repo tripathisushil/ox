@@ -5,7 +5,7 @@ metadata:
 spec:
   source:
     git:
-      uri: "https://github.com/ox-prolifics/rhocp-appDeploy-homework.git"
+      uri: "https://github.com/tripathisushil/ox.git"
   strategy:
     jenkinsPipelineStrategy:
       jenkinsfilePath: openshift-tasks/Jenkinsfile

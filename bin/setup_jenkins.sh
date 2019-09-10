@@ -42,7 +42,7 @@ spec:
    source:
       type: "Git"
       git:
-         uri: "https://github.com/ox-prolifics/rhocp-appDeploy-homework.git"
+         uri: "https://github.com/tripathisushil/ox.git"
    strategy:
       type: "JenkinsPipeline"
       jenkinsPipelineStrategy:
