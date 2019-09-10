@@ -6,7 +6,7 @@ podTemplate(
   containers: [
     containerTemplate(
       name: "jnlp",
-      image: "docker-registry.default.svc:5000/$GUID-jenkins/jenkins-agent-appdev",
+      image: "docker-registry.default.svc:5000/8d47-jenkins/jenkins-agent-appdev",
       resourceRequestMemory: "1Gi",
       resourceLimitMemory: "2Gi",
       resourceRequestCpu: "1",
@@ -27,8 +27,8 @@ podTemplate(
     // Build the Tasks Service
     dir('openshift-tasks') {
       def version = getVersionFromPom("pom.xml")
-      def devProject  = "$GUID-tasks-dev"
-      def prodProject = "$GUID-tasks-prod"
+      def devProject  = "8d47-tasks-dev"
+      def prodProject = "8d47-tasks-prod"
       // Set the tag for the development image: version + build number
       def devTag      = "0.0-0"
       //* sh "oc set env dc/tasks VERSION='${devTag} (tasks-dev)' -n ${devProject}"
