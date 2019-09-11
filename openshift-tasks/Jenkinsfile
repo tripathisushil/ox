@@ -1,5 +1,5 @@
 #!
-def GUID
+def GUID = "b45d"
 podTemplate(
   label: "skopeo-pod",
   cloud: "openshift",
@@ -101,6 +101,12 @@ podTemplate(
                     sleep 30
                     rc = openshift.selector("rc", "tasks-${dc_version}").object()
                  }
+				 def devTasksRoute = sh(returnStdout: true, script: "curl tasks-${GUID}-tasks-dev.apps.${CLUSTER}").trim()
+				 while( devTasksRoute.contains("tasks-dev")) == null ) {
+					sleep 5
+					echo "sleeping for dev"
+					if( devTasksRoute.contains("tasks-dev")) != null ) break
+				 }
               }
            }
         }
