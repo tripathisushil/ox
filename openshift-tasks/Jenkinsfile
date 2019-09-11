@@ -1,5 +1,5 @@
 #!
-// def GUID = "bfa1"
+def GUID
 podTemplate(
   label: "skopeo-pod",
   cloud: "openshift",
