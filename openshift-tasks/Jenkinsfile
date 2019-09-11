@@ -1,5 +1,5 @@
 #!
-def GUID = "b45d"
+def GUID = "bfa1"
 podTemplate(
   label: "skopeo-pod",
   cloud: "openshift",
@@ -22,7 +22,7 @@ podTemplate(
     def mvnCmd = "mvn -s ../nexus_settings.xml"
     // Checkout Source Code.
     stage('Checkout Source') {
-      checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ox-prolifics/rhocp-appDeploy-homework.git']]])
+      checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/tripathisushil/ox.git']]])
     }
 
     // Build the Tasks Service
