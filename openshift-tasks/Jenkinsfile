@@ -1,5 +1,5 @@
 #!
-def GUID = "bfa1"
+// def GUID = "bfa1"
 podTemplate(
   label: "skopeo-pod",
   cloud: "openshift",
@@ -28,8 +28,8 @@ podTemplate(
     // Build the Tasks Service
     dir('openshift-tasks') {
       def version = getVersionFromPom("pom.xml")
-      def devProject  = "${GUID}-tasks-dev"
-      def prodProject = "${GUID}-tasks-prod"
+      def devProject  = "`${GUID}`-tasks-dev"
+      def prodProject = "`${GUID}`-tasks-prod"
       // Set the tag for the development image: version + build number
       def devTag      = "0.0-0"
       //* sh "oc set env dc/tasks VERSION='${devTag} (tasks-dev)' -n ${devProject}"
