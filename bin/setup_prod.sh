@@ -24,7 +24,7 @@ oc set probe dc/tasks-blue --liveness --get-url=http://:8080/ --initial-delay-se
 # Setting 'wrong' VERSION. This will need to be updated in the pipeline
 #oc set env dc/tasks-blue VERSION='0.0 (tsks-blue)' -n ${GUID}-tasks-prod
 oc set env dc/tasks-blue VERSION='0.0 (tasks-blue)' -n ${GUID}-tasks-prod
-oc patch -n ${GUID}-tasks-prod dc/tasks-blue --patch='{"spec":{"template":{"spec":{"containers":[{"name":"tasks-blue","resources":{"limits":{"cpu":"1","memory":"1356Mi"},"requests":{"cpu":"1","memory":"1356Mi"}}}]}}}}'
+oc patch -n ${GUID}-tasks-prod dc/tasks-blue --patch='{"spec":{"template":{"spec":{"containers":[{"name":"tasks-blue","resources":{"limits":{"cpu":"1","memory":"1536Mi"},"requests":{"cpu":"1","memory":"1536Mi"}}}]}}}}'
 
 # Create Green Application
 oc new-app ${GUID}-tasks-dev/tasks:0.0 --name=tasks-green --allow-missing-imagestream-tags=true -n ${GUID}-tasks-prod
@@ -38,7 +38,7 @@ oc set probe dc/tasks-green --liveness --get-url=http://:8080/ --initial-delay-s
 # Setting 'wrong' VERSION. This will need to be updated in the pipeline
 #oc set env dc/tasks-green VERSION='0.0 (tsks-green)' -n ${GUID}-tasks-prod
 oc set env dc/tasks-green VERSION='0.0 (tasks-green)' -n ${GUID}-tasks-prod
-oc patch -n ${GUID}-tasks-prod dc/tasks-green --patch='{"spec":{"template":{"spec":{"containers":[{"name":"tasks-green","resources":{"limits":{"cpu":"1","memory":"1356Mi"},"requests":{"cpu":"1","memory":"1356Mi"}}}]}}}}'
+oc patch -n ${GUID}-tasks-prod dc/tasks-green --patch='{"spec":{"template":{"spec":{"containers":[{"name":"tasks-green","resources":{"limits":{"cpu":"1","memory":"1536Mi"},"requests":{"cpu":"1","memory":"1536Mi"}}}]}}}}'
 
 # Expose Blue service as route to make green application active
 oc expose svc/tasks-green --name tasks -n ${GUID}-tasks-prod
