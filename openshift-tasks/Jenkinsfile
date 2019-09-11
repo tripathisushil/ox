@@ -102,7 +102,7 @@ podTemplate(
                     rc = openshift.selector("rc", "tasks-${dc_version}").object()
                  }
 				 def devTasksRoute = sh(returnStdout: true, script: "curl tasks-${GUID}-tasks-dev.apps.${CLUSTER}").trim()
-				 while( devTasksRoute.contains("tasks-dev")) == null ) {
+				 while( devTasksRoute.contains("tasks-dev")) = null ) {
 					sleep 5
 					echo "sleeping for dev"
 					if( devTasksRoute.contains("tasks-dev")) != null ) break
@@ -161,6 +161,13 @@ podTemplate(
                      sleep 30
                      rc_prod = openshift.selector("rc", "${destApp}-${dc_version}").object()
                   }
+				  
+				 def tasksRoute = sh(returnStdout: true, script: "curl tasks-${GUID}-tasks-prod.apps.${CLUSTER}").trim()
+				 while( devTasksRoute.contains("tasks")) = null ) {
+					sleep 5
+					echo "sleeping for dev"
+					if( devTasksRoute.contains("tasks")) != null ) break
+				 }
                }
             }
          }
