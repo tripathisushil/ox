@@ -163,12 +163,12 @@ podTemplate(
                      rc_prod = openshift.selector("rc", "${destApp}-${dc_version}").object()
                   }
 				  
-				 def devTasksRoute = sh(returnStdout: true, script: "curl tasks-${GUID}-tasks-prod.apps.${CLUSTER}").trim()
-				 while( !devTasksRoute.contains("tasks-prod") ) { 
-				   echo "Waiting for URL to start. Sleeping 15sec"
-				   sleep 15
-				   devTasksRoute = sh(returnStdout: true, script: "curl tasks-${GUID}-tasks-prod.apps.${CLUSTER}").trim()
-			     }
+//				 def devTasksRoute = sh(returnStdout: true, script: "curl tasks-${GUID}-tasks-prod.apps.${CLUSTER}").trim()
+//				 while( !devTasksRoute.contains("tasks-prod") ) { 
+//				   echo "Waiting for URL to start. Sleeping 15sec"
+//				   sleep 15
+//				   devTasksRoute = sh(returnStdout: true, script: "curl tasks-${GUID}-tasks-prod.apps.${CLUSTER}").trim()
+//			     }
                }
             }
          }
