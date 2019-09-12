@@ -99,13 +99,13 @@ podTemplate(
                  def rc = openshift.selector("rc", "tasks-${dc_version}").object()
                  echo "Waiting for ReplicationController tasks-${dc_version} to be ready"
                  while (rc.spec.replicas != rc.status.readyReplicas) {
-                    sleep 30
+                    sleep 5
                     rc = openshift.selector("rc", "tasks-${dc_version}").object()
                  }
 				 def devTasksRoute = sh(returnStdout: true, script: "curl tasks-${GUID}-tasks-dev.apps.${CLUSTER}").trim()
 				 while( !devTasksRoute.contains("tasks-dev") ) { 
 				   echo "Waiting for URL to start. Sleeping 15sec"
-				   sleep 15
+				   sleep 5
 				   devTasksRoute = sh(returnStdout: true, script: "curl tasks-${GUID}-tasks-dev.apps.${CLUSTER}").trim()
 			     }
               }
@@ -159,14 +159,14 @@ podTemplate(
                   def rc_prod = openshift.selector("rc", "${destApp}-${dc_version}").object()
                   echo "Waiting for ${destApp} to be ready"
                   while (rc_prod.spec.replicas != rc_prod.status.readyReplicas) {
-                     sleep 30
+                     sleep 5
                      rc_prod = openshift.selector("rc", "${destApp}-${dc_version}").object()
                   }
 				  
 //				 def devTasksRoute = sh(returnStdout: true, script: "curl tasks-${GUID}-tasks-prod.apps.${CLUSTER}").trim()
 //				 while( !devTasksRoute.contains("tasks-prod") ) { 
 //				   echo "Waiting for URL to start. Sleeping 15sec"
-//				   sleep 15
+//				   sleep 5
 //				   devTasksRoute = sh(returnStdout: true, script: "curl tasks-${GUID}-tasks-prod.apps.${CLUSTER}").trim()
 //			     }
                }
