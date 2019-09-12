@@ -29,8 +29,8 @@ podTemplate(
     // Build the Tasks Service
     dir('openshift-tasks') {
       def version = getVersionFromPom("pom.xml")
-      def devProject  = "'${GUID}'-tasks-dev"
-      def prodProject = "'${GUID}'-tasks-prod"
+      def devProject  = "${GUID}-tasks-dev"
+      def prodProject = "${GUID}-tasks-prod"
       // Set the tag for the development image: version + build number
       def devTag      = "0.0-0"
       //* sh "oc set env dc/tasks VERSION='${devTag} (tasks-dev)' -n ${devProject}"
@@ -146,7 +146,7 @@ podTemplate(
                   echo "Destination Application: " + destApp
                   // Update the Image on the Production Deployment Config
                   def dc = openshift.selector("dc/${destApp}").object()
-                  dc.spec.template.spec.containers[0].image="docker-registry.default.svc:5000/${devProject}/tasks:${devTag}"
+                  dc.spec.template.spec.containers[0].image="docker-registry.default.svc:5000/${devProject}/tasks:${prodTag}"
                   openshift.apply(dc)
                   // Update Config Map in change config files changed in the source
                   openshift.selector("configmap", "${destApp}-config").delete()
