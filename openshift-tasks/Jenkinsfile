@@ -21,6 +21,7 @@ podTemplate(
     // Define Maven Command to point to the correct settings for our Nexus installation
     def mvnCmd = "mvn -s ../nexus_settings.xml"
 	def CLUSTER = "na311.openshift.opentlc.com"
+	def GUID_VAL = ${GUID}
 	def destApp = "tasks-green"
 	def activeApp = "tasks-blue"
     // Checkout Source Code.
@@ -31,8 +32,8 @@ podTemplate(
     // Build the Tasks Service
     dir('openshift-tasks') {
       def version = getVersionFromPom("pom.xml")
-      def devProject  = "${GUID}-tasks-dev"
-      def prodProject = "${GUID}-tasks-prod"
+      def devProject  = "${GUID_VAL}-tasks-dev"
+      def prodProject = "${GUID_VAL}-tasks-prod"
       // Set the tag for the development image: version + build number
       def devTag      = "0.0-0"
       //* sh "oc set env dc/tasks VERSION='${devTag} (tasks-dev)' -n ${devProject}"
