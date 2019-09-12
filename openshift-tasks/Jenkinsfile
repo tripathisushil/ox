@@ -20,6 +20,7 @@ podTemplate(
   node('skopeo-pod') {
     // Define Maven Command to point to the correct settings for our Nexus installation
     def mvnCmd = "mvn -s ../nexus_settings.xml"
+	def CLUSTER = "na311.openshift.opentlc.com"
     // Checkout Source Code.
     stage('Checkout Source') {
       checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/tripathisushil/ox.git']]])
